@@ -1,0 +1,39 @@
+@use "config" as *;
+
+$selectors: ("m": margin, "p": padding);
+$directions: ("t": top, "b": bottom, "l": left, "r": right);
+$axes: "y", "x";
+
+@each $prefix, $selector in $selectors {
+    @each $suffix, $space in $spacing {
+        .#{$prefix}-#{$suffix} {
+            #{$selector}: #{$space} !important;
+        }
+    }
+}
+
+@each $prefix, $selector in $selectors {
+    @each $abbr-dir, $direction in $directions {
+        @each $suffix, $space in $spacing {
+            .#{$prefix}#{$abbr-dir}-#{$suffix} {
+                #{$selector}-#{$direction}: #{$space} !important;
+            }
+        }
+    }
+}
+
+@each $prefix, $selector in $selectors {
+    @each $axis in $axes {
+        @each $suffix, $space in $spacing {
+            .#{$prefix}#{$axis}-#{$suffix} {
+                @if $axis == "y" {
+                    #{$selector}-top: #{$space} !important;
+                    #{$selector}-bottom: #{$space} !important;
+                } @else if $axis == "x" {
+                    #{$selector}-left: #{$space} !important;
+                    #{$selector}-right: #{$space} !important;
+                }
+            }
+        }
+    }
+}
