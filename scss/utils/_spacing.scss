@@ -1,37 +1,71 @@
+@use "sass:map";
+@use "sass:math";
 @use "config" as *;
+@use "mixins" as *;
 
 $selectors: ("m": margin, "p": padding);
 $directions: ("t": top, "b": bottom, "l": left, "r": right);
 $axes: "y", "x";
 
-@each $prefix, $selector in $selectors {
-    @each $suffix, $space in $spacing {
-        .#{$prefix}-#{$suffix} {
-            #{$selector}: #{$space} !important;
-        }
-    }
-}
+$breakpoint-values: map.values($breakpoints);
+$min-breakpoint: math.min($breakpoint-values...);
 
-@each $prefix, $selector in $selectors {
-    @each $abbr-dir, $direction in $directions {
-        @each $suffix, $space in $spacing {
-            .#{$prefix}#{$abbr-dir}-#{$suffix} {
-                #{$selector}-#{$direction}: #{$space} !important;
+@each $breakpoint, $breakpoint-value in $breakpoints {
+    @if $breakpoint-value == $min-breakpoint {
+        @each $prefix, $selector in $selectors {
+            @each $suffix, $space in $spacing {
+                @include validate-unit($space, number, px, em, rem);
+
+                @each $abbr-dir, $direction in $directions {
+                    .#{$prefix}#{$abbr-dir}-#{$suffix} {
+                        #{$selector}-#{$direction}: #{$space} !important;
+                    }
+                }
+
+                @each $axis in $axes {
+                    .#{$prefix}#{$axis}-#{$suffix} {
+                        @if $axis == "y" {
+                            #{$selector}-top: #{$space} !important;
+                            #{$selector}-bottom: #{$space} !important;
+                        } @else if $axis == "x" {
+                            #{$selector}-left: #{$space} !important;
+                            #{$selector}-right: #{$space} !important;
+                        }
+                    }
+                }
+
+                .#{$prefix}-#{$suffix} {
+                    #{$selector}: #{$space} !important;
+                }
             }
         }
-    }
-}
+    } @else {
+        @media (min-width: $breakpoint-value) {
+            @each $prefix, $selector in $selectors {
+                @each $suffix, $space in $spacing {
+                    @include validate-unit($space, number, px, em, rem);
 
-@each $prefix, $selector in $selectors {
-    @each $axis in $axes {
-        @each $suffix, $space in $spacing {
-            .#{$prefix}#{$axis}-#{$suffix} {
-                @if $axis == "y" {
-                    #{$selector}-top: #{$space} !important;
-                    #{$selector}-bottom: #{$space} !important;
-                } @else if $axis == "x" {
-                    #{$selector}-left: #{$space} !important;
-                    #{$selector}-right: #{$space} !important;
+                    @each $abbr-dir, $direction in $directions {
+                        .#{$prefix}#{$abbr-dir}-#{$breakpoint}-#{$suffix} {
+                            #{$selector}-#{$direction}: #{$space} !important;
+                        }
+                    }
+
+                    @each $axis in $axes {
+                        .#{$prefix}#{$axis}-#{$breakpoint}-#{$suffix} {
+                            @if $axis == "y" {
+                                #{$selector}-top: #{$space} !important;
+                                #{$selector}-bottom: #{$space} !important;
+                            } @else if $axis == "x" {
+                                #{$selector}-left: #{$space} !important;
+                                #{$selector}-right: #{$space} !important;
+                            }
+                        }
+                    }
+
+                    .#{$prefix}-#{$breakpoint}-#{$suffix} {
+                        #{$selector}: #{$space} !important;
+                    }
                 }
             }
         }

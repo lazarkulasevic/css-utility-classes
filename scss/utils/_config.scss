@@ -5,3 +5,12 @@ $spacing: (
     "xs": 8px,
     "none": 0px
 );
+
+$breakpoints: (
+    "xs": 375px,
+    "sm": 480px,
+    "md": 768px,
+    "lg": 1080px,
+    "xl": 1440px,
+    "xxl": 1920px
+);
