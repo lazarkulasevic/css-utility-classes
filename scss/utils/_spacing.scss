@@ -18,8 +18,8 @@ $min-breakpoint: math.min($breakpoint-values...);
             #{$property}: #{$space} !important;
         }
 
-        @each $abbr-dir, $direction in $directions {
-            .#{$prefix}#{$abbr-dir}-#{$suffix} {
+        @each $infix, $direction in $directions {
+            .#{$prefix}#{$infix}-#{$suffix} {
                 #{$property}-#{$direction}: #{$space} !important;
             }
         }
@@ -58,8 +58,8 @@ $min-breakpoint: math.min($breakpoint-values...);
                     }
                 }
 
-                @each $abbr-dir, $direction in $directions {
-                    .#{$prefix}#{$abbr-dir}-#{$breakpoint}-#{$suffix} {
+                @each $infix, $direction in $directions {
+                    .#{$prefix}#{$infix}-#{$breakpoint}-#{$suffix} {
                         #{$property}-#{$direction}: #{$space} !important;
                     }
                 }
