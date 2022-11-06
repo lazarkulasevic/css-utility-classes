@@ -10,18 +10,44 @@ $axes: "y", "x";
 $breakpoint-values: map.values($breakpoints);
 $min-breakpoint: math.min($breakpoint-values...);
 
+@each $prefix, $property in $properties {
+    @each $suffix, $space in $spacing {
+        @include validate-unit($space, number, px);
+
+        .#{$prefix}-#{$suffix} {
+            #{$property}: #{$space} !important;
+        }
+
+        @each $abbr-dir, $direction in $directions {
+            .#{$prefix}#{$abbr-dir}-#{$suffix} {
+                #{$property}-#{$direction}: #{$space} !important;
+            }
+        }
+
+        @each $axis in $axes {
+            .#{$prefix}#{$axis}-#{$suffix} {
+                @if $axis == "y" {
+                    #{$property}-top: #{$space} !important;
+                    #{$property}-bottom: #{$space} !important;
+                } @else if $axis == "x" {
+                    #{$property}-left: #{$space} !important;
+                    #{$property}-right: #{$space} !important;
+                }
+            }
+        }
+    }
+}
+
 @each $breakpoint, $breakpoint-value in $breakpoints {
-    @if $breakpoint-value == $min-breakpoint {
+    @media (min-width: $breakpoint-value) {
         @each $prefix, $property in $properties {
             @each $suffix, $space in $spacing {
-                @include validate-unit($space, number, px);
-
-                .#{$prefix}-#{$suffix} {
+                .#{$prefix}-#{$breakpoint}-#{$suffix} {
                     #{$property}: #{$space} !important;
                 }
 
                 @each $axis in $axes {
-                    .#{$prefix}#{$axis}-#{$suffix} {
+                    .#{$prefix}#{$axis}-#{$breakpoint}-#{$suffix} {
                         @if $axis == "y" {
                             #{$property}-top: #{$space} !important;
                             #{$property}-bottom: #{$space} !important;
@@ -33,38 +59,8 @@ $min-breakpoint: math.min($breakpoint-values...);
                 }
 
                 @each $abbr-dir, $direction in $directions {
-                    .#{$prefix}#{$abbr-dir}-#{$suffix} {
+                    .#{$prefix}#{$abbr-dir}-#{$breakpoint}-#{$suffix} {
                         #{$property}-#{$direction}: #{$space} !important;
-                    }
-                }
-            }
-        }
-    } @else {
-        @media (min-width: $breakpoint-value) {
-            @each $prefix, $property in $properties {
-                @each $suffix, $space in $spacing {
-                    @include validate-unit($space, number, px);
-
-                    .#{$prefix}-#{$breakpoint}-#{$suffix} {
-                        #{$property}: #{$space} !important;
-                    }
-
-                    @each $axis in $axes {
-                        .#{$prefix}#{$axis}-#{$breakpoint}-#{$suffix} {
-                            @if $axis == "y" {
-                                #{$property}-top: #{$space} !important;
-                                #{$property}-bottom: #{$space} !important;
-                            } @else if $axis == "x" {
-                                #{$property}-left: #{$space} !important;
-                                #{$property}-right: #{$space} !important;
-                            }
-                        }
-                    }
-
-                    @each $abbr-dir, $direction in $directions {
-                        .#{$prefix}#{$abbr-dir}-#{$breakpoint}-#{$suffix} {
-                            #{$property}-#{$direction}: #{$space} !important;
-                        }
                     }
                 }
             }
