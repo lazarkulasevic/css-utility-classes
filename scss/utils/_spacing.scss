@@ -14,7 +14,7 @@ $min-breakpoint: math.min($breakpoint-values...);
     @if $breakpoint-value == $min-breakpoint {
         @each $prefix, $property in $properties {
             @each $suffix, $space in $spacing {
-                @include validate-type($space, number);
+                @include validate-unit($space, number, px);
 
                 .#{$prefix}-#{$suffix} {
                     #{$property}: #{$space} !important;
@@ -43,7 +43,7 @@ $min-breakpoint: math.min($breakpoint-values...);
         @media (min-width: $breakpoint-value) {
             @each $prefix, $property in $properties {
                 @each $suffix, $space in $spacing {
-                    @include validate-type($space, number);
+                    @include validate-unit($space, number, px);
 
                     .#{$prefix}-#{$breakpoint}-#{$suffix} {
                         #{$property}: #{$space} !important;

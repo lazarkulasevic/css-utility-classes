@@ -1,5 +1,5 @@
-@mixin validate-type($value, $type) {
-    @if type-of($value) != $type {
-        @error "Value #{$value} should be type of #{$type}.";
+@mixin validate-unit($value, $value-type, $units...) {
+    @if type-of($value) != $value-type or index($units, unit($value)) == null {
+        @error "Invalid unit #{unit($value)} for value #{$value}.";
     }
 }
