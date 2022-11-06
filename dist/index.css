@@ -1,0 +1,40 @@
+:root {
+    --bg-color: #252731;
+    --text-color: #fff
+}
+
+body {
+    background: var(--bg-color)
+}
+
+body #app {
+    color: var(--text-color)
+}
+
+.m-8 {
+    margin: 8px !important
+}
+
+.m-16 {
+    margin: 16px !important
+}
+
+.p-0 {
+    padding: 0 !important
+}
+
+@media (min-width: 480px) {
+    .m-sm-16 {
+        margin: 16px !important
+    }
+
+    .m-sm-32 {
+        margin: 32px !important
+    }
+}
+
+@media (min-width: 1080px) {
+    .m-lg-32 {
+        margin: 32px !important
+    }
+}

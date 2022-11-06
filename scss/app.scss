@@ -1,7 +1,12 @@
+:root {
+    --bg-color: #252731;
+    --text-color: #fff;
+}
+
 body {
-    background: #252731;
+    background: var(--bg-color);
 
     #app {
-        color: #fff;
+        color: var(--text-color);
     }
 }
