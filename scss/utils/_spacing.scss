@@ -3,7 +3,7 @@
 @use "config" as *;
 @use "mixins" as *;
 
-$selectors: ("m": margin, "p": padding);
+$properties: ("m": margin, "p": padding);
 $directions: ("t": top, "b": bottom, "l": left, "r": right);
 $axes: "y", "x";
 
@@ -12,7 +12,7 @@ $min-breakpoint: math.min($breakpoint-values...);
 
 @each $breakpoint, $breakpoint-value in $breakpoints {
     @if $breakpoint-value == $min-breakpoint {
-        @each $prefix, $property in $selectors {
+        @each $prefix, $property in $properties {
             @each $suffix, $space in $spacing {
                 @include validate-type($space, number);
 
@@ -41,7 +41,7 @@ $min-breakpoint: math.min($breakpoint-values...);
         }
     } @else {
         @media (min-width: $breakpoint-value) {
-            @each $prefix, $property in $selectors {
+            @each $prefix, $property in $properties {
                 @each $suffix, $space in $spacing {
                     @include validate-type($space, number);
 
